@@ -18,7 +18,7 @@ async function readSpreadsheet(auth) {
   try {
     const sheets = google.sheets({ version: "v4", auth });
     const spreadsheetId = "12mjE9Sv1G9IrzJR3hNEMXzFXuJCpXbllVwmaNVPOGaU";
-    const range = "engineering_software"; // Adjust as needed
+    const range = "engineering_software"; 
 
     const response = await sheets.spreadsheets.get({
       spreadsheetId,
@@ -49,7 +49,7 @@ async function calculateAndUpdateSheet(auth, data) {
   try {
     const sheets = google.sheets({ version: "v4", auth });
     const spreadsheetId = "12mjE9Sv1G9IrzJR3hNEMXzFXuJCpXbllVwmaNVPOGaU";
-    const rangeToUpdate = "engineering_software!G4:K100"; // Adjust as needed
+    const rangeToUpdate = "engineering_software!G4:K100"; 
 
     const valuesToWrite = [];
 
@@ -58,7 +58,7 @@ async function calculateAndUpdateSheet(auth, data) {
       const [matricula, student, absences, p1, p2, p3] = row.map(Number);
       let average = ((p1 + p2 + p3) / 3).toFixed(2);
       let situation = "";
-      let finalApprovalGrade = 0; // Initialized with 0
+      let finalApprovalGrade = 0; 
       let result = "";
 
       if (absences > 0.25 * 60) {
@@ -69,7 +69,7 @@ async function calculateAndUpdateSheet(auth, data) {
         situation = "Final Exam";
         result = "Awaiting Exam Result";
 
-        // Calculate the Final Approval Grade (FAG)
+        // Calculate the Final Approval Grade 
         finalApprovalGrade = Math.max(0, Math.ceil(100 - average));
       } else if (average >= 70) {
         situation = "Approved";
@@ -78,7 +78,7 @@ async function calculateAndUpdateSheet(auth, data) {
       valuesToWrite.push([situation, finalApprovalGrade, result]);
     }
 
-    // Write the results back to the spreadsheet (excluding "Situation" and "Final Approval Grade" texts)
+    // Results back to the spreadsheet
     await sheets.spreadsheets.values.update({
       spreadsheetId,
       range: rangeToUpdate,
